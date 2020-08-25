@@ -6,25 +6,29 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.item_user.view.*
+import java.util.*
 
-class UserAdapter {
+class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     private var data: List<User> = ArrayList()
     var onItemClick: ((login: String) -> Unit)? = null
 
-    fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         return UserViewHolder(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_user, parent, false)
         )
     }
 
-    fun getItemCount() = data.size
+    override fun getItemCount() = data.size
 
-     fun onBindViewHolder(holder: UserViewHolder, position: Int) =
+    override fun onBindViewHolder(holder: UserViewHolder, position: Int) =
         holder.bind(data[position])
 
-
+    fun swapData(data: List<User>) {
+        this.data = data
+        notifyDataSetChanged()
+    }
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: User) = with(itemView) {

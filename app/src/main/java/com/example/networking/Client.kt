@@ -7,12 +7,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object Client {
 
-    val gson = GsonBuilder()
+    private val gson = GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create()
 
-    val retrofit = Retrofit.Builder()
+    private val retrofit = Retrofit.Builder()
         .baseUrl("https://api.github.com/")
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
+
+    val api = retrofit.create(GithubService::class.java)
 }
